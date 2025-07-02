@@ -31,12 +31,12 @@ All components are fully typed, tested, and follow accessibility best practices.
 
 1. **Install dependencies:**
    ```bash
-   bun install
+   pnpm install
    ```
 
 2. **Start development server:**
    ```bash
-   bun dev
+   pnpm dev
    ```
 
 3. **Open your browser:**

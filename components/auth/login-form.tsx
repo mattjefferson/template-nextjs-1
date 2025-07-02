@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { createSupabaseClient } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -42,7 +42,7 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
         onSuccess?.()
         router.push(redirectTo)
       }
-    } catch (err) {
+    } catch (_err) {
       setError('An unexpected error occurred')
     } finally {
       setLoading(false)
@@ -64,7 +64,7 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
       if (error) {
         setError(error.message)
       }
-    } catch (err) {
+    } catch (_err) {
       setError('An unexpected error occurred')
     } finally {
       setLoading(false)

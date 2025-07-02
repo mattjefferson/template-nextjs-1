@@ -1,0 +1,29 @@
+---
+description: Testing Guidelines
+globs: **/*.test.ts,**/*.test.js,**/*.spec.ts,**/*.spec.js
+---
+
+
+Use Jest testing framework
+
+Structure tests with describe and it blocks
+
+Test happy path, edge cases, and failure states
+
+Mock all external API calls and dependencies
+
+Use meaningful test descriptions
+
+Follow AAA pattern: Arrange, Act, Assert
+
+Keep tests isolated and independent
+
+Use beforeEach/afterEach for setup and cleanup
+
+Mock timers when testing time-dependent code
+
+Test async operations with async/await
+
+Use toThrow() for error testing
+
+Prefer specific matchers over toBe(true/false)

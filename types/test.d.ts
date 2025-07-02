@@ -4,7 +4,7 @@
 // Global test types and utilities
 declare global {
   namespace Vi {
-    interface JestAssertion<T = any>
+    interface JestAssertion<T = unknown>
       extends jest.Matchers<void, T>,
         jest.Matchers<Promise<void>, T> {}
   }

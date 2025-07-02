@@ -1,6 +1,12 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import ErrorComponent from './error'
+
+// Type for mocking process.env
+interface MockProcessEnv {
+  NODE_ENV: "development" | "production" | "test"
+  [key: string]: string | undefined
+}
 
 // Mock console.error to avoid noise in tests
 const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
@@ -57,7 +63,7 @@ describe('Error Component', () => {
 
   it('shows error details in development mode', () => {
     // Mock NODE_ENV using vi.spyOn
-    const envSpy = vi.spyOn(process, 'env', 'get').mockReturnValue({ NODE_ENV: 'development' } as any)
+    const envSpy = vi.spyOn(process, 'env', 'get').mockReturnValue({ NODE_ENV: 'development' } as MockProcessEnv)
 
     render(<ErrorComponent error={mockError} reset={mockReset} />)
     
@@ -70,7 +76,7 @@ describe('Error Component', () => {
 
   it('hides error details in production mode', () => {
     // Mock NODE_ENV using vi.spyOn
-    const envSpy = vi.spyOn(process, 'env', 'get').mockReturnValue({ NODE_ENV: 'production' } as any)
+    const envSpy = vi.spyOn(process, 'env', 'get').mockReturnValue({ NODE_ENV: 'production' } as MockProcessEnv)
 
     render(<ErrorComponent error={mockError} reset={mockReset} />)
     
@@ -82,7 +88,7 @@ describe('Error Component', () => {
   })
 
   it('displays error digest when provided', () => {
-    const envSpy = vi.spyOn(process, 'env', 'get').mockReturnValue({ NODE_ENV: 'development' } as any)
+    const envSpy = vi.spyOn(process, 'env', 'get').mockReturnValue({ NODE_ENV: 'development' } as MockProcessEnv)
 
     const errorWithDigest = { ...mockError, digest: 'abc123' }
     render(<ErrorComponent error={errorWithDigest} reset={mockReset} />)

@@ -1,16 +1,18 @@
 import { describe, it, expect } from 'vitest'
 import { POST } from './route'
+import type { CreateUser } from '@/lib/validations'
+import type { NextRequest } from 'next/server'
 
 // Mock NextRequest for testing
-const createMockRequest = (body: any) => {
+const createMockRequest = (body: unknown): NextRequest => {
   return {
     json: async () => body,
-  } as any
+  } as NextRequest
 }
 
 describe('/api/users POST', () => {
   it('should create a user with valid data', async () => {
-    const validUserData = {
+    const validUserData: CreateUser = {
       email: 'test@example.com',
       name: 'John Doe',
     }

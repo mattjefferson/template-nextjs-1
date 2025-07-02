@@ -24,7 +24,7 @@
 - **Vercel** - Hosting and deployment
 
 ## Development Tooling
-- **BUN** - Package manager
+- **pnpm** - Package manager
 - **Biome** - Code formatting and linting
 - **GitHub Actions** - CI/CD pipeline
 

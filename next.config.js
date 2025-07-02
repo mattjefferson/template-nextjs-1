@@ -17,7 +17,6 @@ const nextConfig = {
           return process.env.PRODUCTION_SUPABASE_URL
         case 'staging':
           return process.env.STAGING_SUPABASE_URL
-        case 'development':
         default:
           return process.env.DEVELOPMENT_SUPABASE_URL
       }
@@ -29,7 +28,6 @@ const nextConfig = {
           return process.env.PRODUCTION_SUPABASE_ANON_KEY
         case 'staging':
           return process.env.STAGING_SUPABASE_ANON_KEY
-        case 'development':
         default:
           return process.env.DEVELOPMENT_SUPABASE_ANON_KEY
       }
