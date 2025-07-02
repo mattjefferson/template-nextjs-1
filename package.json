@@ -54,5 +54,5 @@
     "@vitest/coverage-v8": "^1.0.0",
     "@vitest/ui": "^1.0.0"
   },
-  "packageManager": "pnpm@8.0.0"
+  "packageManager": "bun@1.2.17"
 } 
