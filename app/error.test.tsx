@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import ErrorComponent from './error'
 
@@ -56,43 +56,40 @@ describe('Error Component', () => {
   })
 
   it('shows error details in development mode', () => {
-    // Mock NODE_ENV
-    const originalEnv = process.env.NODE_ENV
-    process.env.NODE_ENV = 'development'
+    // Mock NODE_ENV using Vitest's environment stubbing
+    vi.stubEnv('NODE_ENV', 'development')
 
     render(<ErrorComponent error={mockError} reset={mockReset} />)
     
     expect(screen.getByText('Error Details (Development Only)')).toBeInTheDocument()
     expect(screen.getByText('Test error message')).toBeInTheDocument()
     
-    // Restore original NODE_ENV
-    process.env.NODE_ENV = originalEnv
+    // Restore environment
+    vi.unstubAllEnvs()
   })
 
   it('hides error details in production mode', () => {
-    // Mock NODE_ENV
-    const originalEnv = process.env.NODE_ENV
-    process.env.NODE_ENV = 'production'
+    // Mock NODE_ENV using Vitest's environment stubbing
+    vi.stubEnv('NODE_ENV', 'production')
 
     render(<ErrorComponent error={mockError} reset={mockReset} />)
     
     expect(screen.queryByText('Error Details (Development Only)')).not.toBeInTheDocument()
     expect(screen.queryByText('Test error message')).not.toBeInTheDocument()
     
-    // Restore original NODE_ENV
-    process.env.NODE_ENV = originalEnv
+    // Restore environment
+    vi.unstubAllEnvs()
   })
 
   it('displays error digest when provided', () => {
-    const originalEnv = process.env.NODE_ENV
-    process.env.NODE_ENV = 'development'
+    vi.stubEnv('NODE_ENV', 'development')
 
     const errorWithDigest = { ...mockError, digest: 'abc123' }
     render(<ErrorComponent error={errorWithDigest} reset={mockReset} />)
     
     expect(screen.getByText(/Digest: abc123/)).toBeInTheDocument()
     
-    process.env.NODE_ENV = originalEnv
+    vi.unstubAllEnvs()
   })
 
   it('has proper accessibility attributes', () => {
@@ -106,9 +103,11 @@ describe('Error Component', () => {
   })
 
   it('renders destructive styling for error indicator', () => {
-    render(<ErrorComponent error={mockError} reset={mockReset} />)
+    const { container } = render(<ErrorComponent error={mockError} reset={mockReset} />)
     
-    const errorIcon = screen.getByText('!')
+    // Check for AlertTriangle SVG with destructive styling
+    const errorIcon = container.querySelector('svg.text-destructive')
+    expect(errorIcon).toBeInTheDocument()
     expect(errorIcon).toHaveClass('text-destructive')
   })
 }) 

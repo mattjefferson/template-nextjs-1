@@ -7,38 +7,29 @@ describe('Home Page', () => {
     render(<Home />)
     
     const heading = screen.getByRole('heading', { 
-      name: /next\.js 14 \+ react 18 template/i 
+      name: /welcome to next\.js/i 
     })
     
     expect(heading).toBeInTheDocument()
   })
 
-  it('renders all technology links', () => {
+  it('renders the development environment info', () => {
     render(<Home />)
     
-    // Check for Next.js link
-    const nextLink = screen.getByRole('link', { name: /next\.js 14/i })
-    expect(nextLink).toBeInTheDocument()
-    expect(nextLink).toHaveAttribute('href', 'https://nextjs.org/docs')
+    const envHeading = screen.getByText(/development environment info/i)
+    expect(envHeading).toBeInTheDocument()
     
-    // Check for React link
-    const reactLink = screen.getByRole('link', { name: /react 18/i })
-    expect(reactLink).toBeInTheDocument()
-    expect(reactLink).toHaveAttribute('href', 'https://react.dev')
-    
-    // Check for TypeScript link
-    const tsLink = screen.getByRole('link', { name: /typescript/i })
-    expect(tsLink).toBeInTheDocument()
-    expect(tsLink).toHaveAttribute('href', 'https://www.typescriptlang.org')
+    const envStatus = screen.getByText(/development/)
+    expect(envStatus).toBeInTheDocument()
   })
 
-  it('displays the get started message', () => {
+  it('shows Supabase configuration status', () => {
     render(<Home />)
     
-    const message = screen.getByText(/get started by editing/i)
-    expect(message).toBeInTheDocument()
+    const supabaseStatus = screen.getByText(/supabase project/i)
+    expect(supabaseStatus).toBeInTheDocument()
     
-    const codeElement = screen.getByText('app/page.tsx')
-    expect(codeElement).toBeInTheDocument()
+    const notConfigured = screen.getByText(/not configured/i)
+    expect(notConfigured).toBeInTheDocument()
   })
 }) 
