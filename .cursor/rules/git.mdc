@@ -35,7 +35,6 @@ and token refresh functionality. This change provides secure user sessions
 and prevents unauthorized access to protected routes. The implementation
 uses bcrypt for password hashing and includes proper token expiration handling.
 
--Agent Generated Commit Message
 </example>
 
 <example type="invalid">

@@ -31,12 +31,12 @@ All components are fully typed, tested, and follow accessibility best practices.
 
 1. **Install dependencies:**
    ```bash
-   pnpm install
+   bun install
    ```
 
 2. **Start development server:**
    ```bash
-   pnpm dev
+   bun dev
    ```
 
 3. **Open your browser:**
@@ -86,16 +86,16 @@ This template includes comprehensive testing setup:
 
 ```bash
 # Run tests
-pnpm test
+bun test
 
 # Run tests in watch mode
-pnpm test:watch
+bun test:watch
 
 # Run tests with UI
-pnpm test:ui
+bun test:ui
 
 # Generate coverage report
-pnpm test:coverage
+bun test:coverage
 ```
 
 ### Test Files
@@ -136,9 +136,9 @@ Modify the design tokens in:
 
 ### Biome
 
-- **Formatting:** `pnpm format`
-- **Linting:** `pnpm lint`
-- **Check:** `pnpm check` (format + lint)
+- **Formatting:** `bun format`
+- **Linting:** `bun lint`
+- **Check:** `bun check` (format + lint)
 
 ### Configuration Files
 
@@ -343,8 +343,8 @@ To use the latest Supabase auth helpers:
 
 1. Replace dependencies in `package.json`:
    ```bash
-   pnpm remove @supabase/auth-helpers-nextjs @supabase/auth-helpers-react
-   pnpm add @supabase/ssr
+   bun remove @supabase/auth-helpers-nextjs @supabase/auth-helpers-react
+   bun add @supabase/ssr
    ```
 
 2. Update `lib/supabase.ts` to use the new SSR helpers
