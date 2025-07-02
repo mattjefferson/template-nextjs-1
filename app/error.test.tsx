@@ -56,8 +56,8 @@ describe('Error Component', () => {
   })
 
   it('shows error details in development mode', () => {
-    // Mock NODE_ENV using Vitest's environment stubbing
-    vi.stubEnv('NODE_ENV', 'development')
+    // Mock NODE_ENV using vi.spyOn
+    const envSpy = vi.spyOn(process, 'env', 'get').mockReturnValue({ NODE_ENV: 'development' } as any)
 
     render(<ErrorComponent error={mockError} reset={mockReset} />)
     
@@ -65,12 +65,12 @@ describe('Error Component', () => {
     expect(screen.getByText('Test error message')).toBeInTheDocument()
     
     // Restore environment
-    vi.unstubAllEnvs()
+    envSpy.mockRestore()
   })
 
   it('hides error details in production mode', () => {
-    // Mock NODE_ENV using Vitest's environment stubbing
-    vi.stubEnv('NODE_ENV', 'production')
+    // Mock NODE_ENV using vi.spyOn
+    const envSpy = vi.spyOn(process, 'env', 'get').mockReturnValue({ NODE_ENV: 'production' } as any)
 
     render(<ErrorComponent error={mockError} reset={mockReset} />)
     
@@ -78,18 +78,18 @@ describe('Error Component', () => {
     expect(screen.queryByText('Test error message')).not.toBeInTheDocument()
     
     // Restore environment
-    vi.unstubAllEnvs()
+    envSpy.mockRestore()
   })
 
   it('displays error digest when provided', () => {
-    vi.stubEnv('NODE_ENV', 'development')
+    const envSpy = vi.spyOn(process, 'env', 'get').mockReturnValue({ NODE_ENV: 'development' } as any)
 
     const errorWithDigest = { ...mockError, digest: 'abc123' }
     render(<ErrorComponent error={errorWithDigest} reset={mockReset} />)
     
     expect(screen.getByText(/Digest: abc123/)).toBeInTheDocument()
     
-    vi.unstubAllEnvs()
+    envSpy.mockRestore()
   })
 
   it('has proper accessibility attributes', () => {
