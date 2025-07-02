@@ -1,5 +1,9 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { PostsExample } from '@/components/examples/posts-example'
+import { AuthExample } from '@/components/examples/auth-example'
+import { EnvironmentInfo } from '@/components/dev/environment-info'
+import { Rocket, Palette, Code } from 'lucide-react'
 
 export default function Home() {
   return (
@@ -17,10 +21,18 @@ export default function Home() {
         </h1>
       </div>
 
+      {/* Environment Info - Only shows in development */}
+      <div className="w-full max-w-5xl">
+        <EnvironmentInfo />
+      </div>
+
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-3 lg:text-left gap-4">
         <Card>
           <CardHeader>
-            <CardTitle>Next.js 14</CardTitle>
+            <div className="flex items-center gap-2">
+              <Rocket size={24} className="text-primary" />
+              <CardTitle>Next.js 14</CardTitle>
+            </div>
             <CardDescription>
               App Router, Server Components, and more.
             </CardDescription>
@@ -43,7 +55,10 @@ export default function Home() {
 
         <Card>
           <CardHeader>
-            <CardTitle>ShadCN UI</CardTitle>
+            <div className="flex items-center gap-2">
+              <Palette size={24} className="text-primary" />
+              <CardTitle>ShadCN UI</CardTitle>
+            </div>
             <CardDescription>
               Beautiful components built with Radix UI and Tailwind CSS.
             </CardDescription>
@@ -66,7 +81,10 @@ export default function Home() {
 
         <Card>
           <CardHeader>
-            <CardTitle>TypeScript</CardTitle>
+            <div className="flex items-center gap-2">
+              <Code size={24} className="text-primary" />
+              <CardTitle>TypeScript</CardTitle>
+            </div>
             <CardDescription>
               Type-safe development with excellent tooling.
             </CardDescription>
@@ -86,6 +104,16 @@ export default function Home() {
             </Button>
           </CardContent>
         </Card>
+      </div>
+
+      {/* TanStack Query Example */}
+      <div className="w-full max-w-5xl">
+        <PostsExample />
+      </div>
+
+      {/* Supabase Auth Example */}
+      <div className="w-full max-w-5xl">
+        <AuthExample />
       </div>
 
       <div className="flex gap-4">

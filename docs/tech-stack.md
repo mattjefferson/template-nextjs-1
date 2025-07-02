@@ -8,7 +8,6 @@
 ## Frontend
 - **ShadCN** - Component library (built on Radix UI)
 - **Tailwind CSS** - Utility-first CSS framework
-- **Phosphor Icons** - Icon library
 - **TanStack Query** - Server state management
 
 ## Data & Validation

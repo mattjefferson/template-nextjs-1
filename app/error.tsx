@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { AlertTriangle, RotateCcw, Home } from 'lucide-react'
 
 interface ErrorPageProps {
   error: Error & { digest?: string }
@@ -24,7 +25,7 @@ export default function Error({ error, reset }: ErrorPageProps) {
       <Card className="w-full max-w-md text-center">
         <CardHeader>
           <div className="mx-auto mb-4">
-            <div className="text-6xl font-bold text-destructive">!</div>
+            <AlertTriangle size={64} className="text-destructive mx-auto mb-2" />
           </div>
           <CardTitle className="text-2xl">Something went wrong</CardTitle>
           <CardDescription>
@@ -49,10 +50,12 @@ export default function Error({ error, reset }: ErrorPageProps) {
             This error has been logged and our team has been notified.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 justify-center">
-            <Button onClick={reset}>
+            <Button onClick={reset} className="flex items-center gap-2">
+              <RotateCcw size={16} />
               Try Again
             </Button>
-            <Button variant="outline" onClick={handleGoHome}>
+            <Button variant="outline" onClick={handleGoHome} className="flex items-center gap-2">
+              <Home size={16} />
               Go Home
             </Button>
           </div>
