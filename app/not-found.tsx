@@ -1,16 +1,22 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Home, ArrowLeft, Search } from 'lucide-react'
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Home, ArrowLeft, Search } from 'lucide-react';
 
 export default function NotFound() {
   const handleGoBack = () => {
     if (typeof window !== 'undefined') {
-      window.history.back()
+      window.history.back();
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -27,7 +33,8 @@ export default function NotFound() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            Don't worry, it happens to the best of us. Let's get you back on track.
+            Don't worry, it happens to the best of us. Let's get you back on
+            track.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 justify-center">
             <Button asChild>
@@ -36,7 +43,11 @@ export default function NotFound() {
                 Go Home
               </Link>
             </Button>
-            <Button variant="outline" onClick={handleGoBack} className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={handleGoBack}
+              className="flex items-center gap-2"
+            >
               <ArrowLeft size={16} />
               Go Back
             </Button>
@@ -44,5 +55,5 @@ export default function NotFound() {
         </CardContent>
       </Card>
     </div>
-  )
-} 
+  );
+}

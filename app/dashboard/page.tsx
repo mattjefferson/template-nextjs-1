@@ -1,19 +1,25 @@
-'use client'
+'use client';
 
-import { useAuth } from '@/providers/auth-provider'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { User, Shield, Activity } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useAuth } from '@/providers/auth-provider';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { User, Shield, Activity } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function DashboardPage() {
-  const { user, loading } = useAuth()
-  const router = useRouter()
+  const { user, loading } = useAuth();
+  const router = useRouter();
 
   // This is handled by middleware, but we can add client-side check as well
   if (!loading && !user) {
-    router.push('/auth/login')
-    return null
+    router.push('/auth/login');
+    return null;
   }
 
   if (loading) {
@@ -24,7 +30,7 @@ export default function DashboardPage() {
           <div className="h-4 bg-gray-200 rounded w-1/2"></div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -46,8 +52,8 @@ export default function DashboardPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full"
               onClick={() => router.push('/profile')}
             >
@@ -85,8 +91,8 @@ export default function DashboardPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full"
               onClick={() => router.push('/activity')}
             >
@@ -96,5 +102,5 @@ export default function DashboardPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

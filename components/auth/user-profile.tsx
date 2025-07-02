@@ -1,13 +1,19 @@
-'use client'
+'use client';
 
-import { useAuth } from '@/providers/auth-provider'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Loader2, LogOut, Mail, Calendar } from 'lucide-react'
+import { useAuth } from '@/providers/auth-provider';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Loader2, LogOut, Mail, Calendar } from 'lucide-react';
 
 export function UserProfile() {
-  const { user, loading, signOut } = useAuth()
+  const { user, loading, signOut } = useAuth();
 
   if (loading) {
     return (
@@ -16,7 +22,7 @@ export function UserProfile() {
           <Loader2 className="h-6 w-6 animate-spin" />
         </CardContent>
       </Card>
-    )
+    );
   }
 
   if (!user) {
@@ -26,35 +32,34 @@ export function UserProfile() {
           <p className="text-center text-muted-foreground">No user signed in</p>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   const getInitials = (email: string) => {
-    return email.substring(0, 2).toUpperCase()
-  }
+    return email.substring(0, 2).toUpperCase();
+  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
-    })
-  }
+      day: 'numeric',
+    });
+  };
 
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
         <div className="flex items-center space-x-4">
           <Avatar className="h-16 w-16">
-            <AvatarImage 
-              src={user.user_metadata?.avatar_url} 
-              alt={user.user_metadata?.full_name || user.email || 'User avatar'} 
+            <AvatarImage
+              src={user.user_metadata?.avatar_url}
+              alt={user.user_metadata?.full_name || user.email || 'User avatar'}
             />
             <AvatarFallback>
-              {user.user_metadata?.full_name 
+              {user.user_metadata?.full_name
                 ? user.user_metadata.full_name.substring(0, 2).toUpperCase()
-                : getInitials(user.email || 'U')
-              }
+                : getInitials(user.email || 'U')}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1">
@@ -68,7 +73,7 @@ export function UserProfile() {
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
@@ -93,8 +98,8 @@ export function UserProfile() {
         )}
 
         <div className="pt-2">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={signOut}
             className="w-full"
             disabled={loading}
@@ -105,5 +110,5 @@ export function UserProfile() {
         </div>
       </CardContent>
     </Card>
-  )
-} 
+  );
+}

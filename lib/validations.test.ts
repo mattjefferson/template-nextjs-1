@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest'
-import { userSchema, createUserSchema, contactFormSchema } from './validations'
+import { describe, it, expect } from 'vitest';
+import { userSchema, createUserSchema, contactFormSchema } from './validations';
 
 describe('Validation Schemas', () => {
   describe('userSchema', () => {
@@ -9,10 +9,10 @@ describe('Validation Schemas', () => {
         email: 'test@example.com',
         name: 'John Doe',
         createdAt: new Date(),
-      }
+      };
 
-      expect(() => userSchema.parse(validUser)).not.toThrow()
-    })
+      expect(() => userSchema.parse(validUser)).not.toThrow();
+    });
 
     it('should reject invalid email', () => {
       const invalidUser = {
@@ -20,10 +20,10 @@ describe('Validation Schemas', () => {
         email: 'invalid-email',
         name: 'John Doe',
         createdAt: new Date(),
-      }
+      };
 
-      expect(() => userSchema.parse(invalidUser)).toThrow()
-    })
+      expect(() => userSchema.parse(invalidUser)).toThrow();
+    });
 
     it('should reject empty name', () => {
       const invalidUser = {
@@ -31,22 +31,22 @@ describe('Validation Schemas', () => {
         email: 'test@example.com',
         name: '',
         createdAt: new Date(),
-      }
+      };
 
-      expect(() => userSchema.parse(invalidUser)).toThrow()
-    })
-  })
+      expect(() => userSchema.parse(invalidUser)).toThrow();
+    });
+  });
 
   describe('createUserSchema', () => {
     it('should validate user creation data', () => {
       const validCreateUser = {
         email: 'test@example.com',
         name: 'John Doe',
-      }
+      };
 
-      expect(() => createUserSchema.parse(validCreateUser)).not.toThrow()
-    })
-  })
+      expect(() => createUserSchema.parse(validCreateUser)).not.toThrow();
+    });
+  });
 
   describe('contactFormSchema', () => {
     it('should validate a valid contact form', () => {
@@ -54,29 +54,29 @@ describe('Validation Schemas', () => {
         name: 'John Doe',
         email: 'test@example.com',
         message: 'This is a test message that is long enough',
-      }
+      };
 
-      expect(() => contactFormSchema.parse(validForm)).not.toThrow()
-    })
+      expect(() => contactFormSchema.parse(validForm)).not.toThrow();
+    });
 
     it('should reject short name', () => {
       const invalidForm = {
         name: 'J',
         email: 'test@example.com',
         message: 'This is a test message that is long enough',
-      }
+      };
 
-      expect(() => contactFormSchema.parse(invalidForm)).toThrow()
-    })
+      expect(() => contactFormSchema.parse(invalidForm)).toThrow();
+    });
 
     it('should reject short message', () => {
       const invalidForm = {
         name: 'John Doe',
         email: 'test@example.com',
         message: 'Short',
-      }
+      };
 
-      expect(() => contactFormSchema.parse(invalidForm)).toThrow()
-    })
-  })
-}) 
+      expect(() => contactFormSchema.parse(invalidForm)).toThrow();
+    });
+  });
+});

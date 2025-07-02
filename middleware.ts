@@ -1,20 +1,11 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
 // Define protected routes and API endpoints
-const protectedRoutes = [
-  '/dashboard',
-  '/profile',
-  '/settings',
-  '/admin',
-]
+const protectedRoutes = ['/dashboard', '/profile', '/settings', '/admin'];
 
-const protectedApiRoutes = [
-  '/api/users',
-  '/api/posts',
-  '/api/profile',
-]
+const protectedApiRoutes = ['/api/users', '/api/posts', '/api/profile'];
 
 // Define public routes that should bypass auth
 const publicRoutes = [
@@ -23,31 +14,35 @@ const publicRoutes = [
   '/auth/login',
   '/auth/signup',
   '/api/health',
-]
+];
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  const { pathname } = request.nextUrl;
 
   // Skip middleware for public routes
-  if (publicRoutes.some(route => pathname.startsWith(route))) {
-    return NextResponse.next()
+  if (publicRoutes.some((route) => pathname.startsWith(route))) {
+    return NextResponse.next();
   }
 
   // Check if the route is protected
-  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route))
-  const isProtectedApiRoute = protectedApiRoutes.some(route => pathname.startsWith(route))
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route),
+  );
+  const isProtectedApiRoute = protectedApiRoutes.some((route) =>
+    pathname.startsWith(route),
+  );
 
   if (isProtectedRoute || isProtectedApiRoute) {
     // Get the session token from cookies
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
     if (!supabaseUrl || !supabaseAnonKey) {
-      console.error('Missing Supabase environment variables in middleware')
+      console.error('Missing Supabase environment variables in middleware');
       return NextResponse.json(
         { error: 'Server configuration error' },
-        { status: 500 }
-      )
+        { status: 500 },
+      );
     }
 
     // Create a Supabase client with the request cookies
@@ -57,24 +52,27 @@ export async function middleware(request: NextRequest) {
           cookie: request.headers.get('cookie') || '',
         },
       },
-    })
+    });
 
     // Check if we have a session
-    const { data: { session }, error } = await supabase.auth.getSession()
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.getSession();
 
     if (error || !session) {
       // For API routes, return 401 Unauthorized
       if (isProtectedApiRoute) {
         return NextResponse.json(
           { error: 'Authentication required' },
-          { status: 401 }
-        )
+          { status: 401 },
+        );
       }
 
       // For page routes, redirect to login
-      const redirectUrl = new URL('/auth/login', request.url)
-      redirectUrl.searchParams.set('redirectTo', pathname)
-      return NextResponse.redirect(redirectUrl)
+      const redirectUrl = new URL('/auth/login', request.url);
+      redirectUrl.searchParams.set('redirectTo', pathname);
+      return NextResponse.redirect(redirectUrl);
     }
 
     // Session exists, allow the request to proceed
@@ -87,7 +85,6 @@ export async function middleware(request: NextRequest) {
       //   .select('role')
       //   .eq('id', session.user.id)
       //   .single()
-      
       // if (profile?.role !== 'admin') {
       //   return NextResponse.json(
       //     { error: 'Insufficient permissions' },
@@ -97,7 +94,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next()
+  return NextResponse.next();
 }
 
 // Configure which routes the middleware should run on
@@ -112,4 +109,4 @@ export const config = {
      */
     '/((?!_next/static|_next/image|favicon.ico|public).*)',
   ],
-}
+};

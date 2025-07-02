@@ -1,75 +1,81 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { createSupabaseClient } from '@/lib/supabase'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useState } from 'react';
+import { createSupabaseClient } from '@/lib/supabase';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface LoginFormProps {
-  onToggleMode?: () => void
-  onSuccess?: () => void
+  onToggleMode?: () => void;
+  onSuccess?: () => void;
 }
 
 export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const supabase = createSupabaseClient()
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const redirectTo = searchParams.get('redirectTo') || '/dashboard'
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const supabase = createSupabaseClient();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get('redirectTo') || '/dashboard';
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
-      })
+      });
 
       if (error) {
-        setError(error.message)
+        setError(error.message);
       } else {
-        onSuccess?.()
-        router.push(redirectTo)
+        onSuccess?.();
+        router.push(redirectTo);
       }
     } catch (_err) {
-      setError('An unexpected error occurred')
+      setError('An unexpected error occurred');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleGoogleLogin = async () => {
-    setLoading(true)
-    setError(null)
+    setLoading(true);
+    setError(null);
 
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
-        }
-      })
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
 
       if (error) {
-        setError(error.message)
+        setError(error.message);
       }
     } catch (_err) {
-      setError('An unexpected error occurred')
+      setError('An unexpected error occurred');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <Card className="w-full max-w-md">
@@ -97,7 +103,7 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
               />
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
             <div className="relative">
@@ -129,7 +135,11 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
             </div>
           )}
 
-          <Button type="submit" className="w-full" disabled={loading || !email || !password}>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={loading || !email || !password}
+          >
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -146,17 +156,23 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
             <span className="w-full border-t" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+            <span className="bg-background px-2 text-muted-foreground">
+              Or continue with
+            </span>
           </div>
         </div>
 
-        <Button 
-          variant="outline" 
-          className="w-full" 
+        <Button
+          variant="outline"
+          className="w-full"
           onClick={handleGoogleLogin}
           disabled={loading}
         >
-          <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" aria-label="Google logo">
+          <svg
+            className="mr-2 h-4 w-4"
+            viewBox="0 0 24 24"
+            aria-label="Google logo"
+          >
             <title>Google logo</title>
             <path
               fill="currentColor"
@@ -193,5 +209,5 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
         )}
       </CardContent>
     </Card>
-  )
-} 
+  );
+}

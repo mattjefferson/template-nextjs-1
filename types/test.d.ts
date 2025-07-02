@@ -8,4 +8,4 @@ declare global {
       extends jest.Matchers<void, T>,
         jest.Matchers<Promise<void>, T> {}
   }
-} 
+}

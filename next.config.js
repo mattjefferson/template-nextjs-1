@@ -11,28 +11,28 @@ const nextConfig = {
   },
   env: {
     NEXT_PUBLIC_SUPABASE_URL: (() => {
-      const env = process.env.ENVIRONMENT || 'development'
+      const env = process.env.ENVIRONMENT || 'development';
       switch (env) {
         case 'production':
-          return process.env.PRODUCTION_SUPABASE_URL
+          return process.env.PRODUCTION_SUPABASE_URL;
         case 'staging':
-          return process.env.STAGING_SUPABASE_URL
+          return process.env.STAGING_SUPABASE_URL;
         default:
-          return process.env.DEVELOPMENT_SUPABASE_URL
+          return process.env.DEVELOPMENT_SUPABASE_URL;
       }
     })(),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: (() => {
-      const env = process.env.ENVIRONMENT || 'development'
+      const env = process.env.ENVIRONMENT || 'development';
       switch (env) {
         case 'production':
-          return process.env.PRODUCTION_SUPABASE_ANON_KEY
+          return process.env.PRODUCTION_SUPABASE_ANON_KEY;
         case 'staging':
-          return process.env.STAGING_SUPABASE_ANON_KEY
+          return process.env.STAGING_SUPABASE_ANON_KEY;
         default:
-          return process.env.DEVELOPMENT_SUPABASE_ANON_KEY
+          return process.env.DEVELOPMENT_SUPABASE_ANON_KEY;
       }
     })(),
   },
-}
+};
 
-module.exports = nextConfig 
+module.exports = nextConfig;

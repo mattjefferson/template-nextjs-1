@@ -1,46 +1,55 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { createSupabaseClient } from '@/lib/supabase'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Mail, Lock, Eye, EyeOff, Loader2, User } from 'lucide-react'
+import { useState } from 'react';
+import { createSupabaseClient } from '@/lib/supabase';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Mail, Lock, Eye, EyeOff, Loader2, User } from 'lucide-react';
 
 interface SignupFormProps {
-  onToggleMode?: () => void
-  onSuccess?: () => void
+  onToggleMode?: () => void;
+  onSuccess?: () => void;
 }
 
-export function SignupForm({ onToggleMode, onSuccess: _onSuccess }: SignupFormProps) {
-  const [fullName, setFullName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-  const supabase = createSupabaseClient()
+export function SignupForm({
+  onToggleMode,
+  onSuccess: _onSuccess,
+}: SignupFormProps) {
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const supabase = createSupabaseClient();
 
   const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     // Basic validation
     if (password !== confirmPassword) {
-      setError('Passwords do not match')
-      setLoading(false)
-      return
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters')
-      setLoading(false)
-      return
+      setError('Password must be at least 6 characters');
+      setLoading(false);
+      return;
     }
 
     try {
@@ -52,48 +61,50 @@ export function SignupForm({ onToggleMode, onSuccess: _onSuccess }: SignupFormPr
             full_name: fullName,
           },
         },
-      })
+      });
 
       if (error) {
-        setError(error.message)
+        setError(error.message);
       } else {
-        setSuccess(true)
+        setSuccess(true);
         // Note: User needs to confirm email before they can sign in
       }
     } catch (_err) {
-      setError('An unexpected error occurred')
+      setError('An unexpected error occurred');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleGoogleSignup = async () => {
-    setLoading(true)
-    setError(null)
+    setLoading(true);
+    setError(null);
 
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
-        }
-      })
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
 
       if (error) {
-        setError(error.message)
+        setError(error.message);
       }
     } catch (_err) {
-      setError('An unexpected error occurred')
+      setError('An unexpected error occurred');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (success) {
     return (
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl text-center">Check your email</CardTitle>
+          <CardTitle className="text-2xl text-center">
+            Check your email
+          </CardTitle>
           <CardDescription className="text-center">
             We've sent a confirmation link to <strong>{email}</strong>
           </CardDescription>
@@ -109,7 +120,7 @@ export function SignupForm({ onToggleMode, onSuccess: _onSuccess }: SignupFormPr
           )}
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
@@ -155,7 +166,7 @@ export function SignupForm({ onToggleMode, onSuccess: _onSuccess }: SignupFormPr
               />
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
             <div className="relative">
@@ -214,10 +225,12 @@ export function SignupForm({ onToggleMode, onSuccess: _onSuccess }: SignupFormPr
             </div>
           )}
 
-          <Button 
-            type="submit" 
-            className="w-full" 
-            disabled={loading || !email || !password || !confirmPassword || !fullName}
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={
+              loading || !email || !password || !confirmPassword || !fullName
+            }
           >
             {loading ? (
               <>
@@ -235,17 +248,23 @@ export function SignupForm({ onToggleMode, onSuccess: _onSuccess }: SignupFormPr
             <span className="w-full border-t" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+            <span className="bg-background px-2 text-muted-foreground">
+              Or continue with
+            </span>
           </div>
         </div>
 
-        <Button 
-          variant="outline" 
-          className="w-full" 
+        <Button
+          variant="outline"
+          className="w-full"
           onClick={handleGoogleSignup}
           disabled={loading}
         >
-          <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" aria-label="Google logo">
+          <svg
+            className="mr-2 h-4 w-4"
+            viewBox="0 0 24 24"
+            aria-label="Google logo"
+          >
             <title>Google logo</title>
             <path
               fill="currentColor"
@@ -282,5 +301,5 @@ export function SignupForm({ onToggleMode, onSuccess: _onSuccess }: SignupFormPr
         )}
       </CardContent>
     </Card>
-  )
-} 
+  );
+}

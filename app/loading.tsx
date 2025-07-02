@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 export default function Loading() {
   return (
@@ -50,9 +50,11 @@ export default function Loading() {
             <div className="w-12 h-12 rounded-full border-4 border-muted"></div>
             <div className="w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin absolute top-0 left-0"></div>
           </div>
-          <p className="text-sm text-muted-foreground animate-pulse">Loading...</p>
+          <p className="text-sm text-muted-foreground animate-pulse">
+            Loading...
+          </p>
         </div>
       </div>
     </div>
-  )
-} 
+  );
+}
