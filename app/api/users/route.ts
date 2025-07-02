@@ -1,7 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createUserSchema } from '@/lib/validations'
+import { createSupabaseClient } from '@/lib/supabase'
+
+export async function GET() {
+  // Get the authenticated user from the session
+  const supabase = createSupabaseClient()
+  const { data: { session }, error } = await supabase.auth.getSession()
+  
+  if (error || !session) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      { status: 401 }
+    )
+  }
+
+  // Example: Fetch user profile data
+  // const { data: profile, error: profileError } = await supabase
+  //   .from('profiles')
+  //   .select('*')
+  //   .eq('id', session.user.id)
+  //   .single()
+
+  return NextResponse.json({
+    success: true,
+    data: {
+      user: session.user,
+      // profile: profile,
+    }
+  })
+}
 
 export async function POST(request: NextRequest) {
+  // Note: This endpoint is now protected by middleware
+  // Additional authorization logic can be added here
+  
   try {
     const body = await request.json()
     

@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createSupabaseClient } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 interface LoginFormProps {
   onToggleMode?: () => void
@@ -20,6 +21,9 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const supabase = createSupabaseClient()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams.get('redirectTo') || '/dashboard'
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -36,6 +40,7 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
         setError(error.message)
       } else {
         onSuccess?.()
+        router.push(redirectTo)
       }
     } catch (err) {
       setError('An unexpected error occurred')
@@ -152,6 +157,7 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
           disabled={loading}
         >
           <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" aria-label="Google logo">
+            <title>Google logo</title>
             <path
               fill="currentColor"
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
