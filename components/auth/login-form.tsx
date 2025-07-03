@@ -26,7 +26,7 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const supabase = createSupabaseClient();
+  const [supabase] = useState(() => createSupabaseClient());
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get('redirectTo') || '/dashboard';
