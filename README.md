@@ -86,16 +86,16 @@ This template includes comprehensive testing setup:
 
 ```bash
 # Run tests
-bun test
+pnpm test
 
 # Run tests in watch mode
-bun test:watch
+pnpm test:watch
 
 # Run tests with UI
-bun test:ui
+pnpm test:ui
 
 # Generate coverage report
-bun test:coverage
+pnpm test:coverage
 ```
 
 ### Test Files
@@ -136,9 +136,9 @@ Modify the design tokens in:
 
 ### Biome
 
-- **Formatting:** `bun format`
-- **Linting:** `bun lint`
-- **Check:** `bun check` (format + lint)
+- **Formatting:** `pnpm format`
+- **Linting:** `pnpm lint`
+- **Check:** `pnpm check` (format + lint)
 
 ### Configuration Files
 
@@ -343,8 +343,8 @@ To use the latest Supabase auth helpers:
 
 1. Replace dependencies in `package.json`:
    ```bash
-   bun remove @supabase/auth-helpers-nextjs @supabase/auth-helpers-react
-   bun add @supabase/ssr
+   pnpm remove @supabase/auth-helpers-nextjs @supabase/auth-helpers-react
+   pnpm add @supabase/ssr
    ```
 
 2. Update `lib/supabase.ts` to use the new SSR helpers
